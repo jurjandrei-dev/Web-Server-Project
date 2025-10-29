@@ -55,3 +55,7 @@ bool ClientSocket::send(const std::string& message) {
 
     return true;
 }
+
+void ClientSocket::close() {
+    socket.disconnect();
+}
