@@ -2,16 +2,19 @@
 #include <iostream>
 
 bool ServerSocket::start(unsigned short port) {
+    
     if (listener.listen(port) != sf::Socket::Status::Done) {
         std::cerr << "Eroare la listen\n";
         return false;
     }
+
     if (listener.accept(socket) != sf::Socket::Status::Done) {
         std::cerr << "Eroare la accept\n";
         return false;
     }
     return true;
 }
+
 
 
 std::string ServerSocket::receive() {
@@ -64,4 +67,10 @@ bool ServerSocket::send(const std::string& message) {
     }
 
     return true;
+}
+
+void ServerSocket::close(){
+    listener.close();  
+    socket.disconnect();
+
 }

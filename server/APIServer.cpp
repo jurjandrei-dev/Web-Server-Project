@@ -26,3 +26,7 @@ bool APIServer::sendResponse(const std::string& response){
 void APIServer::receiveRequest(){
     std::cout<<this->_socket.receive();
 }
+
+void APIServer::closeConnection(){
+    this->_socket.close();
+}

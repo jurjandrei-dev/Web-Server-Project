@@ -17,5 +17,7 @@ int main(int argc,char** argv){
     api->receiveRequest();
     api->sendResponse("Hello world!");
 
+    api->closeConnection();
+
     return 0;
 }

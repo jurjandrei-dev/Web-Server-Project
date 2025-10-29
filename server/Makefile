@@ -1,5 +1,6 @@
 CC := g++
 SFMLFLAGS := -I/usr/local/SFML/include -L/usr/local/SFML/lib -lsfml-network -lsfml-system
+THREADFLAGS := -pthread
 TARGET := main
 SRC := main.cpp APIServer.cpp ServerSocket.cpp
 

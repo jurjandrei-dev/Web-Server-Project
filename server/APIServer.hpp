@@ -21,4 +21,6 @@ public:
     bool sendResponse(const std::string& response);
     void receiveRequest();
 
+    void closeConnection();
+
 };
