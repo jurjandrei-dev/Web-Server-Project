@@ -18,4 +18,5 @@ public:
     
     bool sendRequest(const std::string& request);
     void receiveResponse();
+    void closeConnection();
 };
