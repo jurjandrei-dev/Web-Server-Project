@@ -27,3 +27,7 @@ bool APIClient::sendRequest(const std::string& request){
 void APIClient::receiveResponse(){
     std::cout<<this->_socket.receive();
 }
+
+void APIClient::closeConnection() {
+    this->_socket.close();
+}

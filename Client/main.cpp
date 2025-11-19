@@ -6,7 +6,7 @@
 int main(int argc,char** argv){
     
     APIClient *api=APIClient::getInstance();
-    auto ip=sf::IpAddress::resolve("127.0.0.1");
+    auto ip=sf::IpAddress::resolve("172.20.10.2");
 
     if(ip.has_value()){
         if(!api->connectToServer(ip.value(),54000)){
@@ -23,7 +23,7 @@ int main(int argc,char** argv){
     api->sendRequest("Salut lume!");
     api->receiveResponse();
 
-
+    api->closeConnection();
 
     return 0;
 }
