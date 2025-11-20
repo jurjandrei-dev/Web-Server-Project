@@ -1,16 +1,4 @@
-#include<iostream>
-#include<string>
-
-#include "AppManager.hpp"
-
-int main(int argc,char** argv){
-    
-    AppManager* app = AppManager::getInstance();
-    app->getInstanceApiClient();
-    app->getInstanceParser();
-    //AppManager::getInstance()->runApplication();
-
-    std::string contents = R"(<!DOCTYPE html>
+<!DOCTYPE html>
             <html lang="ro">
             <head>
                 <meta charset="UTF-8">
@@ -53,10 +41,4 @@ int main(int argc,char** argv){
                 <script src="app.js"></script>
             </body>
             </html>
-            )";
-
-    app->parseHTMLContent(contents);
-    app->showBrowserWindow(contents);
-
-    return 0;
-}
+            
