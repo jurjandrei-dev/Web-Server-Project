@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload - PhotoShare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">PhotoShare</div>
+        <div class="nav-links">
+            <a href="gallery.html">Galerie</a>
+            <a href="my-photos.html">Pozele Mele</a>
+            <a href="upload.html">Upload</a>
+            <form action="/logout" method="POST" style="display: inline;">
+                <button type="submit" class="btn-logout">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="tabs">
+            <a href="gallery.html">Galerie Publică</a>
+            <a href="my-photos.html">Pozele Mele</a>
+            <a href="upload.html" class="active">Upload Poze</a>
+        </div>
+
+        <div class="upload-container">
+            <h2>Încarcă pozele tale</h2>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="upload-area">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">
+                        Selectează imaginea de încărcat
+                    </div>
+                    <div class="file-input-wrapper">
+                        <label for="fileInput" class="btn-choose-file">
+                            Alege fișier
+                        </label>
+                        <input type="file" id="fileInput" name="image" class="file-input" accept="image/*" required>
+                    </div>
+                    <div id="fileName" style="margin-top: 10px; color: #666;"></div>
+                </div>
+                <button type="submit" class="btn-upload" style="margin-top: 20px;">Încarcă Poza</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || '';
+            document.getElementById('fileName').textContent = fileName ? 'Fișier selectat: ' + fileName : '';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie - PhotoShare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">PhotoShare</div>
+        <div class="nav-links">
+            <a href="gallery.html">Galerie</a>
+            <a href="my-photos.html">Pozele Mele</a>
+            <a href="upload.html">Upload</a>
+            <form action="/logout" method="POST" style="display: inline;">
+                <button type="submit" class="btn-logout">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="tabs">
+            <a href="gallery.html" class="active">Galerie Publică</a>
+            <a href="my-photos.html">Pozele Mele</a>
+            <a href="upload.html">Upload Poze</a>
+        </div>
+
+        <div class="section-header">
+            <h2>Explorează pozele publice</h2>
+        </div>
+        <div class="masonry-grid">
+            <div class="pin-card">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400" alt="Mountain Landscape">
+                <div class="pin-info">
+                    <h3>Mountain Landscape</h3>
+                    <div class="pin-actions">
+                        <form action="/download" method="POST">
+                            <input type="hidden" name="filename" value="mountain.jpg">
+                            <input type="hidden" name="type" value="public">
+                            <button type="submit" class="btn-download">Download</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pin-card">
+                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400" alt="Nature">
+                <div class="pin-info">
+                    <h3>Forest Path</h3>
+                    <div class="pin-actions">
+                        <form action="/download" method="POST">
+                            <input type="hidden" name="filename" value="forest.jpg">
+                            <input type="hidden" name="type" value="public">
+                            <button type="submit" class="btn-download">Download</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pin-card">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400" alt="Beach">
+                <div class="pin-info">
+                    <h3>Ocean View</h3>
+                    <div class="pin-actions">
+                        <form action="/download" method="POST">
+                            <input type="hidden" name="filename" value="ocean.jpg">
+                            <input type="hidden" name="type" value="public">
+                            <button type="submit" class="btn-download">Download</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pin-card">
+                <img src="https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=400" alt="City">
+                <div class="pin-info">
+                    <h3>City Lights</h3>
+                    <div class="pin-actions">
+                        <form action="/download" method="POST">
+                            <input type="hidden" name="filename" value="city.jpg">
+                            <input type="hidden" name="type" value="public">
+                            <button type="submit" class="btn-download">Download</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pin-card">
+                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400" alt="Sunset">
+                <div class="pin-info">
+                    <h3>Golden Sunset</h3>
+                    <div class="pin-actions">
+                        <form action="/download" method="POST">
+                            <input type="hidden" name="filename" value="sunset.jpg">
+                            <input type="hidden" name="type" value="public">
+                            <button type="submit" class="btn-download">Download</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pin-card">
+                <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400" alt="Waterfall">
+                <div class="pin-info">
+                    <h3>Waterfall</h3>
+                    <div class="pin-actions">
+                        <form action="/download" method="POST">
+                            <input type="hidden" name="filename" value="waterfall.jpg">
+                            <input type="hidden" name="type" value="public">
+                            <button type="submit" class="btn-download">Download</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

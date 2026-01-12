@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pozele Mele - PhotoShare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">PhotoShare</div>
+        <div class="nav-links">
+            <a href="gallery.html">Galerie</a>
+            <a href="my-photos.html">Pozele Mele</a>
+            <a href="upload.html">Upload</a>
+            <form action="/logout" method="POST" style="display: inline;">
+                <button type="submit" class="btn-logout">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="tabs">
+            <a href="gallery.html">Galerie Publică</a>
+            <a href="my-photos.html" class="active">Pozele Mele</a>
+            <a href="upload.html">Upload Poze</a>
+        </div>
+
+        <!-- Pozele încărcate de user -->
+        <div class="section-header">
+            <h2>Pozele mele încărcate</h2>
+        </div>
+        <div class="masonry-grid" id="uploaded-photos">
+            <!--UPLOADED_IMAGES_PLACEHOLDER-->
+        </div>
+
+    </div>
+</body>
+</html>

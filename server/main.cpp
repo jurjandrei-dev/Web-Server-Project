@@ -1,32 +1,42 @@
-#include<iostream>
-#include<string>
+#include "AppManager.hpp"
+#include <iostream>
+#include <csignal>
 
-#include "APIServer.hpp"
-#include "HTTPRequest.hpp"
+APIServer* serverInstance = nullptr;
 
-
-int main(int argc,char** argv){
-    APIServer* api =APIServer::getInstance();
-
-    /*HTTPRequest request;
-    request.setMethod("GET");
-    request.setRequestURI("/");
-    request.setHost("localhost");
-    request.setHTTPv("1.1");
-    request.setContentType("application/json");
-
-    std::cout<<request.serialize();
-    */
-
-    if(!api->connectToClient(54000)){
-        std::cerr << "Failed to connect to client" << std::endl;
+void signalHandler(int signum) {
+    std::cout << "\nSemnal de întrerupere primit (" << signum << "). Oprire server...\n";
+    
+    if (serverInstance != nullptr) {
+        serverInstance->stop();
     }
-    else{
-        std::cout << "Successfully connected to client" << std::endl;
+    
+    exit(signum);
+}
+
+int main() {
+    // Setează handler pentru CTRL+C
+    signal(SIGINT, signalHandler);
+    signal(SIGTERM, signalHandler);
+    
+    std::cout << "=================================\n";
+    std::cout << "  PhotoShare - Mini Web Server  \n";
+    std::cout << "=================================\n\n";
+    
+    // Pornește aplicația
+    AppManager* app = AppManager::getInstance();
+    
+    if (app == nullptr) {
+        std::cerr << "Eroare: Nu s-a putut inițializa AppManager!\n";
+        return 1;
     }
-
-
-    api->closeConnection();
-
+    
+    // Salvează instanța pentru signal handler
+    serverInstance = APIServer::getInstance();
+    
+    std::cout << "Pornire server...\n";
+    app->runApplication();
+    
+    std::cout << "Server oprit.\n";
     return 0;
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - PhotoShare</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">PhotoShare</div>
+        <div class="nav-links">
+            <a href="login.html">Login</a>
+            <a href="signup.html" class="btn-primary">Sign Up</a>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Creează cont nou</h2>
+            <form action="/signup" method="POST">
+                <div class="form-group">
+                    <label for="name">Nume</label>
+                    <input type="text" id="name" name="name" placeholder="Nume complet" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Parolă</label>
+                    <input type="password" id="password" name="password" placeholder="Parolă (minim 6 caractere)" minlength="6" required>
+                </div>
+                <button type="submit" class="btn-submit">Sign Up</button>
+            </form>
+            <div class="auth-switch">
+                Ai deja cont? <a href="login.html">Login</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
