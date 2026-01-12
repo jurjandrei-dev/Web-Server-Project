@@ -70,7 +70,7 @@ std::string ServerSocket::receive(sf::TcpSocket& socket) {
                     std::cout << "Content-Length: " << contentLength 
                               << ", Body primit până acum: " << bodyReceived << std::endl;
                     
-                    // Verifică dacă am primit tot body-ul
+                    // Verifica daca am primit tot body-ul
                     if (bodyReceived >= contentLength) {
                         std::cout << "Request complet primit!" << std::endl;
                         break;
@@ -81,7 +81,7 @@ std::string ServerSocket::receive(sf::TcpSocket& socket) {
                 }
             }
             
-            // Dacă am headers complete și știm content length
+            // daca am headers complete si stim content length
             if (headersComplete && contentLength > 0) {
                 size_t headerEnd = result.find("\r\n\r\n");
                 int bodyReceived = result.length() - (headerEnd + 4);

@@ -15,14 +15,13 @@ void signalHandler(int signum) {
 }
 
 int main() {
-    // Setează handler pentru CTRL+C
+    // seteaza handler pentru CTRL+C
     signal(SIGINT, signalHandler);
     
     std::cout << "=================================\n";
     std::cout << "  PhotoShare - Mini Web Server  \n";
     std::cout << "=================================\n\n";
-    
-    // Pornește aplicația
+
     AppManager* app = AppManager::getInstance();
     
     if (app == nullptr) {
@@ -30,7 +29,6 @@ int main() {
         return 1;
     }
     
-    // Salvează instanța pentru signal handler
     serverInstance = APIServer::getInstance();
     
     std::cout << "Pornire server...\n";
