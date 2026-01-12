@@ -17,7 +17,6 @@ void signalHandler(int signum) {
 int main() {
     // Setează handler pentru CTRL+C
     signal(SIGINT, signalHandler);
-    signal(SIGTERM, signalHandler);
     
     std::cout << "=================================\n";
     std::cout << "  PhotoShare - Mini Web Server  \n";

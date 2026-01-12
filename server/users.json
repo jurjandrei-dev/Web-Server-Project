@@ -1,3 +1,20 @@
 {
-  
+  "george@mta.ro": {
+    "name": "george",
+    "email": "george@mta.ro",
+    "password": "654321",
+    "uploaded_images": ["1768252516_lagreca-busted-open.gif"]
+  },
+  "jurj@mta.ro": {
+    "name": "jurj",
+    "email": "jurj@mta.ro",
+    "password": "123456",
+    "uploaded_images": []
+  },
+  "nistor@mta.ro": {
+    "name": "nistor",
+    "email": "nistor@mta.ro",
+    "password": "123456",
+    "uploaded_images": ["1768251179_mountain.jpg", "1768251191_peisajMontan.png"]
+  }
 }

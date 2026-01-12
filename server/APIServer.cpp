@@ -630,58 +630,126 @@ bool APIServer::loadUsers() {
     std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     file.close();
     
-    // parsare json
-    size_t pos = 0;
-    while ((pos = content.find("\"", pos)) != std::string::npos) {
+    size_t startPos = content.find('{');
+    if (startPos == std::string::npos) {
+        std::cout << "EROARE: JSON invalid - lipsește '{'" << std::endl;
+        return false;
+    }
+    
+    size_t pos = startPos + 1;
+    int usersFound = 0;
+    
+    while (pos < content.length()) {
+        // cauta urmatorul '"' care ar putea fi inceputul unui email
+        pos = content.find("\"", pos);
+        if (pos == std::string::npos) break;
+        
         size_t emailStart = pos + 1;
         size_t emailEnd = content.find("\"", emailStart);
         if (emailEnd == std::string::npos) break;
         
-        std::string email = content.substr(emailStart, emailEnd - emailStart);
+        std::string potentialKey = content.substr(emailStart, emailEnd - emailStart);
+        
+        // verifica ce urmeaza dupa ":"
+        size_t colonPos = content.find(":", emailEnd);
+        if (colonPos == std::string::npos) break;
+        
+        // sar peste spatii/newlines
+        size_t afterColon = colonPos + 1;
+        while (afterColon < content.length() && 
+               (content[afterColon] == ' ' || content[afterColon] == '\n' || 
+                content[afterColon] == '\r' || content[afterColon] == '\t')) {
+            afterColon++;
+        }
+        
+        if (afterColon >= content.length() || content[afterColon] != '{') {
+            std::cout << "  Skip cheie internă: \"" << potentialKey << "\"\n";
+            pos = emailEnd + 1;
+            continue;
+        }
+        
+        std::string email = potentialKey;
+        usersFound++;
+        std::cout << "\n[" << usersFound << "] Găsit user: " << email << std::endl;
+        
+        size_t braceStart = afterColon;
+        int braceCount = 1;
+        size_t braceEnd = braceStart + 1;
+        
+        while (braceEnd < content.length() && braceCount > 0) {
+            if (content[braceEnd] == '{') braceCount++;
+            else if (content[braceEnd] == '}') braceCount--;
+            braceEnd++;
+        }
+        
+        if (braceCount != 0) {
+            std::cout << "EROARE: JSON invalid - paranteză neînchisă pentru user: " << email << std::endl;
+            break;
+        }
+        
+        std::string userBlock = content.substr(braceStart, braceEnd - braceStart);
+        std::cout << "  User block length: " << userBlock.length() << " bytes\n";
         
         // name
-        size_t namePos = content.find("\"name\"", emailEnd);
-        if (namePos == std::string::npos) break;
-        size_t nameValStart = content.find("\"", namePos + 6) + 1;
-        size_t nameValEnd = content.find("\"", nameValStart);
-        std::string name = content.substr(nameValStart, nameValEnd - nameValStart);
+        std::string name = "";
+        size_t namePos = userBlock.find("\"name\"");
+        if (namePos != std::string::npos) {
+            size_t nameValStart = userBlock.find("\"", namePos + 6);
+            if (nameValStart != std::string::npos) {
+                nameValStart++;
+                size_t nameValEnd = userBlock.find("\"", nameValStart);
+                if (nameValEnd != std::string::npos) {
+                    name = userBlock.substr(nameValStart, nameValEnd - nameValStart);
+                }
+            }
+        }
         
         // password
-        size_t passPos = content.find("\"password\"", nameValEnd);
-        if (passPos == std::string::npos) break;
-        size_t passValStart = content.find("\"", passPos + 10) + 1;
-        size_t passValEnd = content.find("\"", passValStart);
-        std::string password = content.substr(passValStart, passValEnd - passValStart);
+        std::string password = "";
+        size_t passPos = userBlock.find("\"password\"");
+        if (passPos != std::string::npos) {
+            size_t passValStart = userBlock.find("\"", passPos + 10);
+            if (passValStart != std::string::npos) {
+                passValStart++;
+                size_t passValEnd = userBlock.find("\"", passValStart);
+                if (passValEnd != std::string::npos) {
+                    password = userBlock.substr(passValStart, passValEnd - passValStart);
+                }
+            }
+        }
         
-        // uploaded images
+        // uploded images
         std::vector<std::string> uploadedImages;
-        size_t upImgsPos = content.find("\"uploaded_images\"", passValEnd);
-        if (upImgsPos != std::string::npos) {
-            size_t arrStart = content.find("[", upImgsPos);
-            size_t arrEnd = content.find("]", arrStart);
+        size_t imgsPos = userBlock.find("\"uploaded_images\"");
+        if (imgsPos != std::string::npos) {
+            size_t arrStart = userBlock.find("[", imgsPos);
+            size_t arrEnd = userBlock.find("]", arrStart);
             if (arrStart != std::string::npos && arrEnd != std::string::npos) {
-                std::string arrContent = content.substr(arrStart + 1, arrEnd - arrStart - 1);
+                std::string arrContent = userBlock.substr(arrStart + 1, arrEnd - arrStart - 1);
+                
                 size_t imgPos = 0;
-                while ((imgPos = arrContent.find("\"", imgPos)) != std::string::npos) {
+                while (imgPos < arrContent.length()) {
+                    imgPos = arrContent.find("\"", imgPos);
+                    if (imgPos == std::string::npos) break;
+                    
                     size_t imgStart = imgPos + 1;
                     size_t imgEnd = arrContent.find("\"", imgStart);
                     if (imgEnd == std::string::npos) break;
-                    uploadedImages.push_back(arrContent.substr(imgStart, imgEnd - imgStart));
+                    
+                    std::string imageName = arrContent.substr(imgStart, imgEnd - imgStart);
+                    uploadedImages.push_back(imageName);
+                    
                     imgPos = imgEnd + 1;
                 }
             }
         }
-
+        
         User user = {name, email, password, uploadedImages};
         _users[email] = user;
         
-        std::cout << "  Loaded: " << email << " (uploaded: " << uploadedImages.size()
-                    << ")" << std::endl;
-        
-        pos = passValEnd + 1;
+        pos = braceEnd;
     }
     
-    std::cout << "Total useri incarcati: " << _users.size() << std::endl;
     return true;
 }
 
